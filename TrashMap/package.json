@@ -11,7 +11,14 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(expo-.*|@expo/.*)/)"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
