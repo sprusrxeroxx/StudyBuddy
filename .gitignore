@@ -1,2 +1,5 @@
 # Environemnt variables
 .env
+
+# docker
+docker-compose.yml
