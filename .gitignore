@@ -1,5 +1,7 @@
-# Environemnt variables
+# Environment variables
 .env
+.vscode/
+
 
 # docker
 docker-compose.yml
@@ -7,3 +9,6 @@ docker-compose.yml
 # Cache
 _python_cache/
 __pycache__/
+
+# Package
+__init__.py
