@@ -1,6 +1,6 @@
 import re
 
-from backend.utils import clean_markdown_line
+from utils import clean_markdown_line
 
 def parse_markdown(markdown_content):
     """
