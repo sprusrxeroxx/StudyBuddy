@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from utils import json_fixer
 from parsers.pdf_parser import extract_questions_from_json
 from models import db, Exam, Question, SubQuestion
 import json
@@ -26,6 +27,10 @@ def get_exams():
 @exams_bp.route('/upload', methods=['POST'])
 def upload_exam():
     data = request.json
+
+    # validation/formating pipeline
+    json_fixer(data.get('pdf_json'))
+
     exam_data = data.get('exam')
     pdf_json = data.get('pdf_json')
     
