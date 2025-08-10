@@ -22,6 +22,7 @@ def get_exams():
         logger.error(f"Error fetching exams: {str(e)}")
         return jsonify({'error': 'Database error'}), 500
 
+@exams_bp.route('/upload', methods=['POST'])
 def upload_exam():
     data = request.json
     exam_data = data.get('exam')
