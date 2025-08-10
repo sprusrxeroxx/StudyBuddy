@@ -1,8 +1,6 @@
 from flask import Blueprint, request, jsonify
-from utils import json_fixer
-from parsers.pdf_parser import extract_questions_from_json
+from parsers.markdown_parser import parse_markdown
 from models import db, Exam, Question, SubQuestion
-import json
 import logging
 
 
@@ -27,63 +25,58 @@ def get_exams():
 @exams_bp.route('/upload', methods=['POST'])
 def upload_exam():
     data = request.json
-
-    # validation/formating pipeline
-    json_fixer(data.get('pdf_json'))
-
     exam_data = data.get('exam')
-    pdf_json = data.get('pdf_json')
+    pages = data.get('pages')  # Now expects list of {page_number, markdown}
     
-    if not exam_data or not pdf_json:
-        return jsonify({'error': 'Missing exam data or PDF content'}), 400
+    if not exam_data or not pages:
+        return jsonify({'error': 'Missing exam data or pages content'}), 400
     
     try:
-        # Create new exam
+        # Create exam
         exam = Exam(
             year=exam_data['year'],
             subject=exam_data['subject'],
-            province=exam_data.get('province')
+            province=exam_data['province'],
+            month=exam_data['month'],
+            _version=exam_data.get('_version', 1)
         )
         db.session.add(exam)
-        db.session.flush()  # Get exam ID
+        db.session.flush()
         
-        # Parse questions
-        questions = extract_questions_from_json(pdf_json)
-        question_count = 0
-        subquestion_count = 0
-        
-        for q_data in questions:
-            question = Question(
-                exam_id=exam.id,
-                page_number=q_data['page_number'],
-                question_number=q_data['question_number'],
-                stem=q_data['stem'],
-            )
-            db.session.add(question)
-            db.session.flush()
+        # Process each page
+        for page in pages:
+            markdown_content = page['markdown']
             
-            for sq_data in q_data['sub_questions']:
-                sub_question = SubQuestion(
-                    question_id=question.id,
-                    content=sq_data['content'],
-                    marks=sq_data['marks'],
-                    topics=json.dumps(sq_data['topics'])  # Store as JSON string
+            # Parse markdown for this page
+            questions = parse_markdown(markdown_content)
+            
+            for q_data in questions:
+                question = Question(
+                    exam_id=exam.id,
+                    question_number=q_data['question_number'],
+                    stem=q_data['stem']
                 )
-                db.session.add(sub_question)
-                subquestion_count += 1
-            
-            question_count += 1
+                db.session.add(question)
+                db.session.flush()
+                
+                for sq_data in q_data['sub_questions']:
+                    sub_question = SubQuestion(
+                        question_id=question.id,
+                        sub_question_number=sq_data['sub_question_number'],
+                        content=sq_data['content'],
+                        marks=sq_data['marks']
+                    )
+                    db.session.add(sub_question)
         
         db.session.commit()
         
         return jsonify({
             'message': 'Exam uploaded successfully',
             'exam_id': exam.id,
-            'questions': question_count,
-            'sub_questions': subquestion_count
+            'pages_processed': len(pages)
         }), 201
         
     except Exception as e:
         db.session.rollback()
-        logger.exception("Error uploading exam")
+        logging.exception("Error uploading exam")
         return jsonify({'error': str(e)}), 500
