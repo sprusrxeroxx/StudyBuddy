@@ -22,7 +22,6 @@ def get_exams():
         logger.error(f"Error fetching exams: {str(e)}")
         return jsonify({'error': 'Database error'}), 500
 
-@exams_bp.route('/upload', methods=['POST'])
 def upload_exam():
     data = request.json
     exam_data = data.get('exam')
@@ -36,15 +35,14 @@ def upload_exam():
         exam = Exam(
             year=exam_data['year'],
             subject=exam_data['subject'],
-            province=exam_data['province'],
-            month=exam_data['month'],
-            _version=exam_data.get('_version', 1)
+            province=exam_data.get('province')
         )
         db.session.add(exam)
         db.session.flush()
         
         # Process each page
         for page in pages:
+            page_number = page['page_number']
             markdown_content = page['markdown']
             
             # Parse markdown for this page
@@ -53,6 +51,7 @@ def upload_exam():
             for q_data in questions:
                 question = Question(
                     exam_id=exam.id,
+                    page_number=page_number,
                     question_number=q_data['question_number'],
                     stem=q_data['stem']
                 )
