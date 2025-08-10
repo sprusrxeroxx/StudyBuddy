@@ -1,4 +1,3 @@
-from collections import defaultdict
 import re
 
 from backend.utils import clean_markdown_line
