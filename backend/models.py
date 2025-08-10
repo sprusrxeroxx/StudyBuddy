@@ -28,7 +28,7 @@ class SubQuestion(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     solution = db.Column(db.Text)
-    topics = db.Column(db.Text, default='[]')  
+    topics = db.Column(db.Text, default='[]')
     difficulty = db.Column(db.Float, default=0.5)
     attempts_correct = db.Column(db.Integer, default=0)
     attempts_total = db.Column(db.Integer, default=0)
