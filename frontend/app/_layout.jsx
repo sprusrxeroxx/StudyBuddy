@@ -1,22 +1,28 @@
-import { StatusBar, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
 import { Stack } from 'expo-router';
+import { Colors } from '../constants/Colors';
+import ThemedView from '../components/ThemedView';
 
 const RootLayout = () => {
     const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme] ?? Colors.light 
 
     return (
         <>
             <StatusBar value="auto" />
-            <View style={{ flex: 1 }}>
-                <Stack>
+            <ThemedView style={{ flex: 1 }}>
+                <Stack screenOptions = {{
+                  headerStyle: { backgroundColor: theme.navbackground },
+                  headerTintColor: theme.text
+                }}>
                     <Stack.Screen name="index" options={{ headerShown: false }} />
                     <Stack.Screen name="exams" options={{ title: 'Exams' }} />
                     <Stack.Screen name="practice" options={{ title: 'Practice' }} />
                 </Stack>
-            <View style={styles.footerContainer}>
+            <ThemedView style={styles.footerContainer}>
                 <Text style={styles.footer}>© 2025 Honeycomb Technologies</Text>
-            </View>
-            </View>
+            </ThemedView>
+            </ThemedView>
             );
         </>
     );

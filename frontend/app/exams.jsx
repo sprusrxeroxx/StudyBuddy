@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, useColorScheme } from 'react-native'
+import ThemedView from '../components/ThemedView';
+import ThemedText from '../components/ThemedText';
 
 const Exams = () => {
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Exams Page</Text>
-    </View>
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.title}>Exams Page</ThemedText>
+    </ThemedView>
   )
 }
 

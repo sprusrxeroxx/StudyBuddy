@@ -1,22 +1,24 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Image, useColorScheme } from 'react-native'
 import { Link } from 'expo-router'
 
 import Logo from '../assets/studybuddy.webp'
 import Spacer from '../components/Spacer'
+import ThemedView from '../components/ThemedView';
+import ThemedText from '../components/ThemedText'
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <View>
+    <ThemedView style={styles.container} >
+      <ThemedView>
         <Image source={Logo} style={[styles.image, { width: 100, height: 100 }]} resizeMode="cover" />
-      </View>
-      <Text style={styles.title}>Study Buddy</Text>
+      </ThemedView>
+      <ThemedText title={true} ><Link href="/">Study Buddy</Link></ThemedText>
       <Spacer />
-      <Text style={[styles.shadowedText,]}><Link href="/exams">Exams</Link></Text>
-      <Text style={[styles.shadowedText, { marginTop: 1 }]}>
+      <ThemedText style={styles.shadowedText}><Link href="/exams">Exams</Link></ThemedText>
+      <ThemedText style={[styles.shadowedText, { marginTop: 1 }]}>
         <Link href="/practice">Practice</Link>
-      </Text>
-    </View>
+      </ThemedText>
+    </ThemedView>
   )
 }
 
