@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
+import { Link } from 'expo-router'
+
 import Logo from '../assets/studybuddy.webp'
 
 const Home = () => {
@@ -9,10 +11,10 @@ const Home = () => {
       </View>
       <Text style={styles.title}>Study Buddy</Text>
       <Text style={[styles.shadowedText, { marginTop: 10, marginBottom: 5 }]}>
-        Exams
+        <Link href="/exams">Exams</Link>
       </Text>
       <Text style={[styles.shadowedText, { marginTop: 1, marginBottom: 5 }]}>
-        Practice
+        <Link href="/practice">Practice</Link>
       </Text>
     </View>
   )
