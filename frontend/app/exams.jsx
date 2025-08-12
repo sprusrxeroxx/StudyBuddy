@@ -5,7 +5,6 @@ const Exams = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Exams Page</Text>
-      <Link href="/" style={styles.link}>Home</Link>
     </View>
   )
 }
@@ -21,9 +20,5 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 24,
-  },
-  link: {
-    marginVertical: 10,
-    borderBottomWidth: 1,
   }
 })

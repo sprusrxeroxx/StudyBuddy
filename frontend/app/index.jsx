@@ -10,10 +10,10 @@ const Home = () => {
         <Image source={Logo} style={[styles.image, { width: 100, height: 100 }]} resizeMode="cover" />
       </View>
       <Text style={styles.title}>Study Buddy</Text>
-      <Text style={[styles.shadowedText, { marginTop: 10, marginBottom: 5 }]}>
+      <Text style={[styles.shadowedText, { marginTop: 10  }]}>
         <Link href="/exams">Exams</Link>
       </Text>
-      <Text style={[styles.shadowedText, { marginTop: 1, marginBottom: 5 }]}>
+      <Text style={[styles.shadowedText, { marginTop: 1 }]}>
         <Link href="/practice">Practice</Link>
       </Text>
     </View>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
+    marginBottom: 5
   },
   card: {
     backgroundColor: '#c4d5daad',
