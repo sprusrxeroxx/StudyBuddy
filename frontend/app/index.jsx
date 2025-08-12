@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import { Link } from 'expo-router'
 
 import Logo from '../assets/studybuddy.webp'
+import Spacer from '../components/Spacer'
 
 const Home = () => {
   return (
@@ -10,9 +11,8 @@ const Home = () => {
         <Image source={Logo} style={[styles.image, { width: 100, height: 100 }]} resizeMode="cover" />
       </View>
       <Text style={styles.title}>Study Buddy</Text>
-      <Text style={[styles.shadowedText, { marginTop: 10  }]}>
-        <Link href="/exams">Exams</Link>
-      </Text>
+      <Spacer />
+      <Text style={[styles.shadowedText,]}><Link href="/exams">Exams</Link></Text>
       <Text style={[styles.shadowedText, { marginTop: 1 }]}>
         <Link href="/practice">Practice</Link>
       </Text>
