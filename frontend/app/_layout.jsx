@@ -1,7 +1,10 @@
-import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
+import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import { Stack } from 'expo-router';
-import { Colors } from '../constants/Colors';
+
 import ThemedView from '../components/ThemedView';
+import ThemedText from '../components/ThemedText';
+
+import { Colors } from '../constants/Colors';
 
 const RootLayout = () => {
     const colorScheme = useColorScheme();
@@ -20,7 +23,7 @@ const RootLayout = () => {
                     <Stack.Screen name="practice" options={{ title: 'Practice' }} />
                 </Stack>
             <ThemedView style={styles.footerContainer}>
-                <Text style={styles.footer}>© 2025 Honeycomb Technologies</Text>
+                <ThemedText style={styles.footer}>© 2025 Honeycomb Technologies</ThemedText>
             </ThemedView>
             </ThemedView>
             );
