@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   shadowedText: {
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 2, height: 2 },
+    textShadowColor: 'rgba(0, 0, 0, 0.19)',
+    textShadowOffset: { width: 2, height: 3 },
     textShadowRadius: 5,
     marginBottom: 5
   },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c4d5daad',
     borderRadius: 5,
     padding: 10,
-    boxShadow: 'rgba(0, 0, 0, 0.37)',
+    boxShadow: 'rgba(0, 0, 0, 0.23)',
   },
   image: {
     width: 5,
