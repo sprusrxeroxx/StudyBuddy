@@ -174,3 +174,18 @@ def create_exam_bulk():
         db.session.rollback()
         logger.error(f"Error creating bulk exam: {str(e)}")
         return jsonify({'error': 'Database error'}), 500
+
+@exams_bp.route('/<int:exam_id>', methods=['DELETE'])
+def delete_exam(exam_id):
+    """Delete an exam and all its questions/subquestions/subsections"""
+    try:
+        exam = Exam.query.get_or_404(exam_id)
+        db.session.delete(exam)
+        db.session.commit()
+        
+        return jsonify({'message': 'Exam deleted successfully'}), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"Error deleting exam {exam_id}: {str(e)}")
+        return jsonify({'error': 'Database error'}), 500
