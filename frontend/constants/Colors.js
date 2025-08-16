@@ -4,9 +4,9 @@ export const Colors =
     warning:  '#FFD6A5', // Soft pastel orange for warnings
 
     dark: {
-         text: '#F8F9FA',           // Light text for dark backgrounds
-         title: '#e6c2c2ff',          // Pastel red for headings/titles
-         background: '#2D2D2D',     // Dark background
+         text: '#99a8b8ff',           // Light text for dark backgrounds
+         title: '#faaef4e0',          // Pastel red for headings/titles
+         background: '#264547ff',     // Dark background
          navbackground: '#3C3C3C',  // Slightly lighter nav area
          iconColor: '#A0C4FF',       // Unfocused pastel blue
          iconColorFocused: '#FFADAD',// Focused pastel red
@@ -14,7 +14,7 @@ export const Colors =
     },
 
     light: {
-         text: '#333333',           // Neutral gray for text
+         text: '#333333ce',           // Neutral gray for text
          title: '#023047',          // Dark teal from glasses outline
          background: '#F8F9FA',     // Soft light gray background
          navbackground: '#FFFFFF',  // White navigation area
