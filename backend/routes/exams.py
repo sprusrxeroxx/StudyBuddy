@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
-from parsers.markdown_parser import parse_markdown
-from models import db, Exam, Question, SubQuestion
+from models import db, Exam, Question, SubQuestion, SubSection
 import logging
 
 
@@ -9,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 @exams_bp.route('/', methods=['GET'])
 def get_exams():
+    """Get all exams"""
     try:
         exams = Exam.query.all()
         return jsonify([{
@@ -16,67 +16,161 @@ def get_exams():
             'year': e.year,
             'subject': e.subject,
             'province': e.province,
+            'month': e.month,
+            '_v': e._v,
             'question_count': len(e.questions)
         } for e in exams])
     except Exception as e:
         logger.error(f"Error fetching exams: {str(e)}")
         return jsonify({'error': 'Database error'}), 500
 
-@exams_bp.route('/upload', methods=['POST'])
-def upload_exam():
-    data = request.json
-    exam_data = data.get('exam')
-    pages = data.get('pages')  # Now expects list of {page_number, markdown}
-    
-    if not exam_data or not pages:
-        return jsonify({'error': 'Missing exam data or pages content'}), 400
-    
+@exams_bp.route('/', methods=['POST'])
+def create_exam():
+    """Create a new exam"""
     try:
-        # Create exam
+        data = request.json
+        exam = Exam(
+            year=data['exam']['year'],
+            subject=data['exam']['subject'],
+            province=data['exam'].get('province'),
+            month=data['exam'].get('month'),
+            _v=data['exam'].get('_v', 1)
+        )
+        db.session.add(exam)
+        db.session.commit()
+        return jsonify({'id': exam.id}), 201
+    except KeyError as e:
+        return jsonify({'error': f'Missing required field: {str(e)}'}), 400
+    except Exception as e:
+        logger.error(f"Error creating exam: {str(e)}")
+        return jsonify({'error': 'Database error'}), 500
+
+@exams_bp.route('/<int:exam_id>', methods=['GET'])
+def get_exam(exam_id):
+    """Get a specific exam by ID"""
+    try:
+        exam = Exam.query.get_or_404(exam_id)
+        return jsonify({
+            'id': exam.id,
+            'year': exam.year,
+            'subject': exam.subject,
+            'province': exam.province,
+            'month': exam.month,
+            '_v': exam._v,
+            'question_count': len(exam.questions)
+        })
+    except Exception as e:
+        logger.error(f"Error fetching exam {exam_id}: {str(e)}")
+        return jsonify({'error': 'Database error'}), 500
+
+@exams_bp.route('/<int:exam_id>/full', methods=['GET'])
+def get_full_exam(exam_id):
+    """Get complete exam with all questions, subquestions, and subsections"""
+    try:
+        exam = Exam.query.get_or_404(exam_id)
+        questions = []
+        
+        for q in exam.questions.order_by(Question.sort_order):
+            question_data = {
+                'id': q.id,
+                'stem': q.stem,
+                'sort_order': q.sort_order,
+                'sub_questions': []
+            }
+            
+            for sq in q.sub_questions.order_by(SubQuestion.sort_order):
+                subq_data = {
+                    'id': sq.id,
+                    'stem': sq.stem,
+                    'sort_order': sq.sort_order,
+                    'sub_sections': []
+                }
+                
+                for ss in sq.sub_sections.order_by(SubSection.sort_order):
+                    subsec_data = {
+                        'id': ss.id,
+                        'stem': ss.stem,
+                        'sort_order': ss.sort_order
+                    }
+                    subq_data['sub_sections'].append(subsec_data)
+                
+                question_data['sub_questions'].append(subq_data)
+            
+            questions.append(question_data)
+        
+        return jsonify({
+            'id': exam.id,
+            'year': exam.year,
+            'subject': exam.subject,
+            'province': exam.province,
+            'month': exam.month,
+            'questions': questions
+        })
+    except Exception as e:
+        logger.error(f"Error fetching full exam {exam_id}: {str(e)}")
+        return jsonify({'error': 'Database error'}), 500
+
+@exams_bp.route('/bulk', methods=['POST'])
+def create_exam_bulk():
+    """Create exam with all questions, subquestions, and subsections in one request"""
+    try:
+        data = request.json
+        # Create exam - support both old and new format
+        if 'exam' in data:
+            exam_data = data['exam']
+        else:
+            exam_data = data
+            
         exam = Exam(
             year=exam_data['year'],
             subject=exam_data['subject'],
-            province=exam_data.get('province')
+            province=exam_data.get('province'),
+            month=exam_data.get('month'),
+            _v=exam_data.get('_v', 1)
         )
         db.session.add(exam)
-        db.session.flush()
+        db.session.flush()  # Get exam ID without committing
         
-        # Process each page
-        for page in pages:
-            page_number = page['page_number']
-            markdown_content = page['markdown']
+        # Process questions hierarchy
+        for q_data in data.get('questions', []):
+            question = Question(
+                exam_id=exam.id,
+                stem=q_data['stem'],
+                sort_order=q_data.get('sort_order', 1)
+            )
+            db.session.add(question)
+            db.session.flush()
             
-            # Parse markdown for this page
-            questions = parse_markdown(markdown_content)
-            
-            for q_data in questions:
-                question = Question(
-                    exam_id=exam.id,
-                    page_number=page_number,
-                    question_number=q_data['question_number'],
-                    stem=q_data['stem']
+            # Process sub-questions
+            for sq_data in q_data.get('sub_questions', []):
+                sub_question = SubQuestion(
+                    question_id=question.id,
+                    stem=sq_data['stem'],
+                    sort_order=sq_data.get('sort_order', 1)
                 )
-                db.session.add(question)
+                db.session.add(sub_question)
                 db.session.flush()
                 
-                for sq_data in q_data['sub_questions']:
-                    sub_question = SubQuestion(
-                        question_id=question.id,
-                        sub_question_number=sq_data['sub_question_number'],
-                        content=sq_data['content'],
-                        marks=sq_data['marks']
+                # Process sub-sections
+                for ss_data in sq_data.get('sub_sections', []):
+                    sub_section = SubSection(
+                        sub_question_id=sub_question.id,
+                        stem=ss_data['stem'],
+                        sort_order=ss_data.get('sort_order', 1)
                     )
-                    db.session.add(sub_question)
+                    db.session.add(sub_section)
         
         db.session.commit()
         
         return jsonify({
-            'message': 'Exam uploaded successfully',
-            'exam_id': exam.id,
-            'pages_processed': len(pages)
+            'message': 'Exam created successfully',
+            'exam_id': exam.id
         }), 201
         
+    except KeyError as e:
+        db.session.rollback()
+        return jsonify({'error': f'Missing required field: {str(e)}'}), 400
     except Exception as e:
         db.session.rollback()
-        logging.exception("Error uploading exam")
-        return jsonify({'error': str(e)}), 500
+        logger.error(f"Error creating bulk exam: {str(e)}")
+        return jsonify({'error': 'Database error'}), 500
