@@ -69,35 +69,35 @@ def get_full_exam(exam_id):
     try:
         exam = Exam.query.get_or_404(exam_id)
         questions = []
-        
-        for q in exam.questions.order_by(Question.sort_order):
+
+        for q in sorted(exam.questions, key=lambda x: (x.sort_order or 0)):
             question_data = {
                 'id': q.id,
                 'stem': q.stem,
                 'sort_order': q.sort_order,
                 'sub_questions': []
             }
-            
-            for sq in q.sub_questions.order_by(SubQuestion.sort_order):
+
+            for sq in sorted(q.sub_questions, key=lambda x: (x.sort_order or 0)):
                 subq_data = {
                     'id': sq.id,
                     'stem': sq.stem,
                     'sort_order': sq.sort_order,
                     'sub_sections': []
                 }
-                
-                for ss in sq.sub_sections.order_by(SubSection.sort_order):
+
+                for ss in sorted(sq.sub_sections, key=lambda x: (x.sort_order or 0)):
                     subsec_data = {
                         'id': ss.id,
                         'stem': ss.stem,
                         'sort_order': ss.sort_order
                     }
                     subq_data['sub_sections'].append(subsec_data)
-                
+
                 question_data['sub_questions'].append(subq_data)
-            
+
             questions.append(question_data)
-        
+
         return jsonify({
             'id': exam.id,
             'year': exam.year,

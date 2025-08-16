@@ -119,8 +119,8 @@ def get_subquestions_by_question(question_id):
     try:
         question = Question.query.get_or_404(question_id)
         subquestions = []
-        
-        for sq in question.sub_questions.order_by(SubQuestion.sort_order):
+
+        for sq in sorted(question.sub_questions, key=lambda x: (x.sort_order or 0)):
             subq_data = {
                 'id': sq.id,
                 'stem': sq.stem,

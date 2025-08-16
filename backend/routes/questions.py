@@ -131,7 +131,7 @@ def get_questions_by_exam(exam_id):
         exam = Exam.query.get_or_404(exam_id)
         questions = []
         
-        for q in exam.questions.order_by(Question.sort_order):
+        for q in sorted(exam.questions, key=lambda x: (x.sort_order or 0)):
             question_data = {
                 'id': q.id,
                 'stem': q.stem,
