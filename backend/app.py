@@ -2,6 +2,9 @@ from flask import Flask, jsonify
 from database import init_db, db
 import models as models
 from routes.exams import exams_bp
+from routes.questions import questions_bp
+from routes.subquestions import subquestions_bp
+from routes.subsections import subsections_bp
 
 app = Flask(__name__)
 
@@ -10,6 +13,9 @@ init_db(app)
 
 # Register blueprints
 app.register_blueprint(exams_bp, url_prefix='/api/exams')
+app.register_blueprint(questions_bp, url_prefix='/api/questions')
+app.register_blueprint(subquestions_bp, url_prefix='/api/subquestions')
+app.register_blueprint(subsections_bp, url_prefix='/api/subsections')
 
 @app.route('/')
 def health_check():
