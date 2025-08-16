@@ -52,7 +52,7 @@ def get_subquestion(subquestion_id):
         
         # Get subsections
         subsections = []
-        for ss in subquestion.sub_sections.order_by(SubSection.sort_order):
+        for ss in sorted(subquestion.sub_sections, key=lambda x: (x.sort_order or 0)):
             subsec_data = {
                 'id': ss.id,
                 'stem': ss.stem,
