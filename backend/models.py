@@ -8,27 +8,45 @@ class Exam(db.Model):
     month = db.Column(db.String(30))
     _v = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
-    questions = db.relationship('Question', backref='exam', lazy=True)
+    questions = db.relationship(
+        'Question',
+        backref='exam',
+        lazy=True,
+        cascade='all, delete-orphan',
+        passive_deletes=True
+    )
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
+    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id', ondelete='CASCADE'), nullable=False)
     stem = db.Column(db.Text)
     sort_order = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=db.func.now())
-    sub_questions = db.relationship('SubQuestion', backref='question', lazy=True)
+    sub_questions = db.relationship(
+        'SubQuestion',
+        backref='question',
+        lazy=True,
+        cascade='all, delete-orphan',
+        passive_deletes=True
+    )
 
 class SubQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id', ondelete='CASCADE'), nullable=False)
     stem = db.Column(db.Text)
     sort_order = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=db.func.now())
-    sub_sections = db.relationship('SubSection', backref='sub_question', lazy=True)
+    sub_sections = db.relationship(
+        'SubSection',
+        backref='sub_question',
+        lazy=True,
+        cascade='all, delete-orphan',
+        passive_deletes=True
+    )
 
 class SubSection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sub_question_id = db.Column(db.Integer, db.ForeignKey('sub_question.id'), nullable=False)
+    sub_question_id = db.Column(db.Integer, db.ForeignKey('sub_question.id', ondelete='CASCADE'), nullable=False)
     stem = db.Column(db.Text, nullable=False)
     sort_order = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=db.func.now())
