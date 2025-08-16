@@ -9,7 +9,7 @@
 - `GET /api/exams/{id}` - Get specific exam by ID
 - `GET /api/exams/{id}/full` - Get complete exam with all questions
 - `POST /api/exams/bulk` - Create exam with all questions in one request
-- `DELETE /api/exam/{id}` - Delete an exam (cascades to questions/subquestion/subsections)
+- `DELETE /api/exams/{id}` - Delete an exam (cascades to questions/subquestion/subsections)
 
 #### Question Endpoints (`/api/questions`)
 - `POST /api/questions/` - Create a new question (requires exam_id)
