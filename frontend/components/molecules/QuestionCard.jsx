@@ -11,37 +11,34 @@ const QuestionCard = ({ question, colorScheme }) => {
         : null;
         
     const firstSubsection = firstSubquestion && firstSubquestion.sub_sections && firstSubquestion.sub_sections.length > 0 
-        ? firstSubquestion.sub_sections[0] 
+        ? firstSubquestion.sub_sections[1] 
         : null;
 
     return (
         <ThemedView style={[styles.card, { backgroundColor: theme.uiBackground }]}>
-        <ThemedText style={styles.questionHeader}>
-            Question {question.sort_order}
-        </ThemedText>
-        
-        {/* Display question stem if available */}
-        {question.stem && (
-            <ThemedText style={styles.questionStem}>{question.stem}</ThemedText>
-        )}
-        
-        {/* Display first subquestion if available */}
-        {firstSubquestion && (
-            <ThemedView style={styles.subquestionContainer}>
-            <ThemedText style={styles.subquestionTitle}>
-                {question.sort_order}.{firstSubquestion.sort_order} {firstSubquestion.stem}
+            <ThemedText style={styles.questionHeader}>
+                Question {question.sort_order}
             </ThemedText>
             
-            {/* Display first subsection if available */}
-            {firstSubsection && (
-                <ThemedView style={styles.subsectionContainer}>
-                <ThemedText style={styles.subsectionText}>
-                    {question.sort_order}.{firstSubquestion.sort_order}.{firstSubsection.sort_order} {firstSubsection.stem}
-                </ThemedText>
+            {question.stem && (
+                <ThemedText style={styles.questionStem}>{question.stem}</ThemedText>
+            )}
+            
+            {firstSubquestion && (
+                <ThemedView style={styles.subquestionContainer}>
+                    <ThemedText style={styles.subquestionTitle}>
+                        {question.sort_order}.{firstSubquestion.sort_order} {firstSubquestion.stem}
+                    </ThemedText>
+                
+                    {firstSubsection && (
+                        <ThemedView style={styles.subsectionContainer}>
+                            <ThemedText style={styles.subsectionText}>
+                                {question.sort_order}.{firstSubquestion.sort_order}.{firstSubsection.sort_order} {firstSubsection.stem}
+                            </ThemedText>
+                        </ThemedView>
+                    )}
                 </ThemedView>
             )}
-            </ThemedView>
-        )}
         </ThemedView>
     );
 };
