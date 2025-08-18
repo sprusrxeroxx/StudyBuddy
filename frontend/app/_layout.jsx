@@ -19,11 +19,12 @@ const RootLayout = () => {
                   headerTintColor: theme.text
                 }}>
                     <Stack.Screen name="index" options={{ headerShown: false }} />
-                    <Stack.Screen name="exams" options={{ title: 'Exams' }} />
-                    <Stack.Screen name="practice" options={{ title: 'Practice' }} />
+                    <Stack.Screen name="exams" options={{ title: '' }} />
+                    <Stack.Screen name="practice" options={{ title: '' }} />
+                    <Stack.Screen name="question" options={{ title: '' }} />
                 </Stack>
-            <ThemedView style={styles.footerContainer}>
-                <ThemedText style={styles.footer}>© 2025 Honeycomb Technologies</ThemedText>
+            <ThemedView style={[styles.footerContainer, { backgroundColor: theme.uibackground }]}>
+                <ThemedText style={[styles.footer, { color: theme.text }]}>© 2025 Honeycomb Technologies</ThemedText>
             </ThemedView>
             </ThemedView>
             );
@@ -37,10 +38,8 @@ const styles = StyleSheet.create({
   footerContainer: {
     paddingVertical: 15,
     alignItems: 'center',
-    backgroundColor: '#f2f2f2',
   },
   footer: {
-    fontSize: 12,
-    color: '#555',
+    fontSize: 10,
   },
 });
