@@ -50,11 +50,9 @@ const Exams = () => {
      
         // Navigate to the first question (you would need to create this screen)
         router.push({
-          pathname: '/practice',
+          pathname: '/question',
           params: { 
-            examId,
             questionId: firstQuestion.id,
-            // You can add more parameters as needed
           }
         });
       } else {
