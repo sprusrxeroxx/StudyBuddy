@@ -47,9 +47,7 @@ const Exams = () => {
       // Check if the exam has questions
       if (examData.questions && examData.questions.length > 0) {
         const firstQuestion = examData.questions[0];
-        console.log('First question:', firstQuestion);
-        const firstSubquestion = firstQuestion.subquestions && firstQuestion.subquestions.length > 0 ? firstQuestion.subquestions[0] : null;
-        
+     
         // Navigate to the first question (you would need to create this screen)
         router.push({
           pathname: '/practice',
