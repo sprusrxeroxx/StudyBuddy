@@ -61,7 +61,7 @@ def get_question(question_id):
             }
             
             # Get subsections
-            for ss in sq.sub_sections.order_by(SubSection.sort_order):
+            for ss in sorted(sq.sub_sections, key=lambda x: (x.sort_order or 0)):
                 subsec_data = {
                     'id': ss.id,
                     'stem': ss.stem,
