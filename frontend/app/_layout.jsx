@@ -12,7 +12,7 @@ const RootLayout = () => {
 
     return (
         <>
-            <StatusBar value="auto" />
+            <StatusBar value="auto" barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'} />
             <ThemedView style={{ flex: 1 }}>
                 <Stack screenOptions = {{
                   headerStyle: { backgroundColor: theme.navbackground },
