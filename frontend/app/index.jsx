@@ -2,9 +2,9 @@ import { StyleSheet, Image, useColorScheme } from 'react-native'
 import { Link } from 'expo-router'
 
 import Logo from '../assets/studybuddy.webp'
-import Spacer from '../components/Spacer'
-import ThemedView from '../components/ThemedView';
-import ThemedText from '../components/ThemedText'
+import Spacer from '../components/atoms/Spacer'
+import ThemedView from '../components/atoms/ThemedView';
+import ThemedText from '../components/atoms/ThemedText'
 
 const Home = () => {
   return (
