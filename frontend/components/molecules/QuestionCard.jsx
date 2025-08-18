@@ -1,7 +1,6 @@
 import { Colors } from '../../constants/Colors';
 import ThemedText from '../atoms/ThemedText';
 import ThemedView from '../atoms/ThemedView';
-import { Card } from "@/components/ui/card";
 
 const QuestionCard = ({ question, colorScheme }) => {
     const theme = Colors[colorScheme] ?? Colors.light;
