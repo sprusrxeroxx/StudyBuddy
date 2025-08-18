@@ -36,6 +36,7 @@ class SubQuestion(db.Model):
     stem = db.Column(db.Text)
     sort_order = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=db.func.now())
+    solutions = db.Column(db.Text, nullable=True)
     sub_sections = db.relationship(
         'SubSection',
         backref='sub_question',
@@ -49,4 +50,5 @@ class SubSection(db.Model):
     sub_question_id = db.Column(db.Integer, db.ForeignKey('sub_question.id', ondelete='CASCADE'), nullable=False)
     stem = db.Column(db.Text, nullable=False)
     sort_order = db.Column(db.Integer, default=1)
+    solutions = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
