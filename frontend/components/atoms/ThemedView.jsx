@@ -1,5 +1,5 @@
 import { useColorScheme, View } from 'react-native';
-import { Colors } from '../constants/Colors';
+import { Colors } from '../../constants/Colors';
 
 const ThemedView = ({ style, ...props }) => {
   const colorScheme = useColorScheme();
