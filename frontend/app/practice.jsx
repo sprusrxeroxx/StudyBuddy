@@ -10,7 +10,7 @@ import QuestionCard from '../components/molecules/QuestionCard';
 
 const Practice = () => {
   const params = useLocalSearchParams();
-  const { examId, questionId } = params;
+  const { questionId } = params;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [question, setQuestion] = useState(null);
