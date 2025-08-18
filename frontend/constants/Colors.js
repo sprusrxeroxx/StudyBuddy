@@ -1,25 +1,25 @@
 export const Colors =
 {
-    primary:  '#A0C4FF', // Pastel blue from logo background
-    warning:  '#FFD6A5', // Soft pastel orange for warnings
+    primary:  '#89CFF0',
+    warning:  '#FFB347', // Warm pastel orange for contrast & alerts
 
     dark: {
-         text: '#99a8b8ff',           // Light text for dark backgrounds
-         title: '#faaef4e0',          // Pastel red for headings/titles
-         background: '#264547ff',     // Dark background
-         navbackground: '#3C3C3C',  // Slightly lighter nav area
-         iconColor: '#A0C4FF',       // Unfocused pastel blue
-         iconColorFocused: '#FFADAD',// Focused pastel red
-         uiBackground: '#444444',   // UI card background in dark mode
+         text: '#EAEAEA',          // Soft white for readability on dark
+         title: '#FFD6E0',         // Pastel pink highlight, glowing like stars
+         background: '#0B0C1A',    // Deep velvet midnight blue
+         navbackground: '#141629', // Slightly lighter for navigation bar
+         iconColor: '#89CFF0',      // Soft blue accent
+         iconColorFocused: '#FFADAD',// Focused pastel red/pink
+         uiBackground: '#1C1E36',  // Card-like surfaces in dark mode
     },
 
     light: {
-         text: '#333333ce',           // Neutral gray for text
-         title: '#023047',          // Dark teal from glasses outline
-         background: '#F8F9FA',     // Soft light gray background
-         navbackground: '#FFFFFF',  // White navigation area
-         iconColor: '#A0C4FF',       // Unfocused pastel blue
-         iconColorFocused: '#FFADAD',// Focused pastel red
-         uiBackground: '#FFFFFF',   // UI card background in light mode
+         text: '#2E2E2E',          // Formal, grounded gray text
+         title: '#004B6B',         // Bold deep teal/blue for titles
+         background: '#F7F9FB',    // Airy pastel-white “marshmallow morning”
+         navbackground: '#FFFFFF', // Clean white navigation
+         iconColor: '#89CFF0',      // Soft blue accent
+         iconColorFocused: '#FFADAD',// Pastel pink/red highlight
+         uiBackground: '#FFFFFF',  // Flat white UI elements
     },                  
 }
