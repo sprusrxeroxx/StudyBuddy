@@ -6,7 +6,6 @@ import { Colors } from '../constants/Colors';
 
 import ThemedView from '../components/atoms/ThemedView';
 import ThemedText from '../components/atoms/ThemedText';
-import QuestionCard from '../components/molecules/QuestionCard';
 
 const Practice = () => {
   const params = useLocalSearchParams();
@@ -69,12 +68,6 @@ const Practice = () => {
       </ThemedView>
     );
   }
-
-  return (
-    <ThemedView style={styles.container}>
-      <QuestionCard question={question} colorScheme={colorScheme} />
-    </ThemedView>
-  )
 }
 
 export default Practice

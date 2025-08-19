@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import ThemedText from '../atoms/ThemedText';
+import ThemedView from '../atoms/ThemedView';
 import { Colors } from '../../constants/Colors';
 
 const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
@@ -37,7 +38,7 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
   // if (!solution) return null;
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <TextInput
         style={[
           styles.input, 
@@ -56,7 +57,7 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
         editable={!isChecked}
       />
       
-      <View style={styles.buttonContainer}>
+      <ThemedView style={styles.buttonContainer}>
         {!isChecked ? (
           <TouchableOpacity 
             style={[styles.button, { backgroundColor: Colors.primary }]} 
@@ -72,10 +73,10 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
             <ThemedText style={styles.buttonText}>Try Again</ThemedText>
           </TouchableOpacity>
         )}
-      </View>
+      </ThemedView>
       
       {isChecked && (
-        <View style={styles.feedbackContainer}>
+        <ThemedView style={styles.feedbackContainer}>
           <ThemedText 
             style={[
               styles.feedback, 
@@ -89,9 +90,9 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
               Solution: {solution}
             </ThemedText>
           )}
-        </View>
+        </ThemedView>
       )}
-    </View>
+    </ThemedView>
   );
 };
 
