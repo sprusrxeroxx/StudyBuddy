@@ -83,6 +83,7 @@ def get_full_exam(exam_id):
                     'id': sq.id,
                     'stem': sq.stem,
                     'sort_order': sq.sort_order,
+                    'solutions': sq.solutions,
                     'sub_sections': []
                 }
 
@@ -90,6 +91,7 @@ def get_full_exam(exam_id):
                     subsec_data = {
                         'id': ss.id,
                         'stem': ss.stem,
+                        'solutions': sq.solutions,
                         'sort_order': ss.sort_order
                     }
                     subq_data['sub_sections'].append(subsec_data)
@@ -146,6 +148,7 @@ def create_exam_bulk():
                 sub_question = SubQuestion(
                     question_id=question.id,
                     stem=sq_data['stem'],
+                    solutions=sq_data['solutions'],
                     sort_order=sq_data.get('sort_order', 1)
                 )
                 db.session.add(sub_question)
@@ -156,6 +159,7 @@ def create_exam_bulk():
                     sub_section = SubSection(
                         sub_question_id=sub_question.id,
                         stem=ss_data['stem'],
+                        solutions=ss_data['solutions'],
                         sort_order=ss_data.get('sort_order', 1)
                     )
                     db.session.add(sub_section)

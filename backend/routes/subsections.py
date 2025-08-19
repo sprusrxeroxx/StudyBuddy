@@ -29,7 +29,8 @@ def create_subsection():
         subsection = SubSection(
             sub_question_id=subquestion_id,
             stem=data['stem'],
-            sort_order=data.get('sort_order', next_order)
+            sort_order=data.get('sort_order', next_order),
+            solutions=data['solutions']
         )
         db.session.add(subsection)
         db.session.commit()
@@ -39,6 +40,7 @@ def create_subsection():
             'sub_question_id': subsection.sub_question_id,
             'stem': subsection.stem,
             'sort_order': subsection.sort_order,
+            'solutions': subsection.solutions,
             'subsection_number': (
                 f"Q{subquestion.question.sort_order}."
                 f"{subquestion.sort_order}."
@@ -61,7 +63,8 @@ def get_subsection(subsection_id):
             'id': subsection.id,
             'sub_question_id': subsection.sub_question_id,
             'stem': subsection.stem,
-            'sort_order': subsection.sort_order
+            'sort_order': subsection.sort_order,
+            'solutions': subsection.solutions
         })
         
     except Exception as e:
@@ -79,14 +82,17 @@ def update_subsection(subsection_id):
             subsection.stem = data['stem']
         if 'sort_order' in data:
             subsection.sort_order = data['sort_order']
-            
+        if 'solutions' in data:
+            subsection.solutions = data['solutions']
+
         db.session.commit()
         
         return jsonify({
             'id': subsection.id,
             'sub_question_id': subsection.sub_question_id,
             'stem': subsection.stem,
-            'sort_order': subsection.sort_order
+            'sort_order': subsection.sort_order,
+            'solutions': subsection.solutions
         })
         
     except Exception as e:
@@ -120,7 +126,8 @@ def get_subsections_by_subquestion(subquestion_id):
             subsec_data = {
                 'id': ss.id,
                 'stem': ss.stem,
-                'sort_order': ss.sort_order
+                'sort_order': ss.sort_order,
+                'solutions': ss.solutions
             }
             subsections.append(subsec_data)
         

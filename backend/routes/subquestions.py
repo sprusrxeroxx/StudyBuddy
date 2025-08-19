@@ -36,6 +36,7 @@ def create_subquestion():
             'question_id': subquestion.question_id,
             'stem': subquestion.stem,
             'sort_order': subquestion.sort_order,
+            'solutions': subquestion.solutions,
             'subquestion_number': f"Q{question.sort_order}.{subquestion.sort_order}"
         }), 201
         
@@ -65,7 +66,8 @@ def get_subquestion(subquestion_id):
             'question_id': subquestion.question_id,
             'stem': subquestion.stem,
             'sort_order': subquestion.sort_order,
-            'sub_sections': subsections
+            'sub_sections': subsections,
+            'solutions': subquestion.solutions
         })
         
     except Exception as e:
@@ -83,6 +85,8 @@ def update_subquestion(subquestion_id):
             subquestion.stem = data['stem']
         if 'sort_order' in data:
             subquestion.sort_order = data['sort_order']
+        if 'solutions' in data:
+            subquestion.solutions = data['solutions']
             
         db.session.commit()
         
@@ -90,7 +94,8 @@ def update_subquestion(subquestion_id):
             'id': subquestion.id,
             'question_id': subquestion.question_id,
             'stem': subquestion.stem,
-            'sort_order': subquestion.sort_order
+            'sort_order': subquestion.sort_order,
+            'solutions': subquestion.solutions
         })
         
     except Exception as e:
@@ -125,6 +130,7 @@ def get_subquestions_by_question(question_id):
                 'id': sq.id,
                 'stem': sq.stem,
                 'sort_order': sq.sort_order,
+                'solutions': sq.solutions,
                 'sub_sections_count': len(sq.sub_sections)
             }
             subquestions.append(subq_data)
