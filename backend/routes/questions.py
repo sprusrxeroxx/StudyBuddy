@@ -57,6 +57,7 @@ def get_question(question_id):
                 'id': sq.id,
                 'stem': sq.stem,
                 'sort_order': sq.sort_order,
+                'solutions': sq.solutions,
                 'sub_sections': []
             }
             
@@ -65,6 +66,7 @@ def get_question(question_id):
                 subsec_data = {
                     'id': ss.id,
                     'stem': ss.stem,
+                    'solutions': ss.solutions,
                     'sort_order': ss.sort_order
                 }
                 subq_data['sub_sections'].append(subsec_data)
