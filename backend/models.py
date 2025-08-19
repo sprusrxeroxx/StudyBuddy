@@ -36,7 +36,7 @@ class SubQuestion(db.Model):
     stem = db.Column(db.Text)
     sort_order = db.Column(db.Integer, default=1)
     created_at = db.Column(db.DateTime, default=db.func.now())
-    solutions = db.Column(db.Text, nullable=True)
+    solutions = db.Column(db.Text)
     sub_sections = db.relationship(
         'SubSection',
         backref='sub_question',
