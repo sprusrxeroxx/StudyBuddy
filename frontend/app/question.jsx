@@ -161,16 +161,6 @@ const Question = () => {
           )}
         </ThemedView>
       </ScrollView>
-
-      {/* Navigation buttons */}
-      <ThemedView style={styles.navigation}>
-        <TouchableOpacity 
-          style={styles.navButton}
-          onPress={() => router.back()}
-        >
-          <ThemedText style={styles.navButtonText}>Back to Exams</ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
     </ThemedView>
   );
 }
