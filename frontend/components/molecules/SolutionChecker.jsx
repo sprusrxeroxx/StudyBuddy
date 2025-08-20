@@ -24,6 +24,7 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
     if (isCorrect && onCorrectAnswer) {
       setTimeout(() => {
         onCorrectAnswer();
+        resetAnswer(); // Reset for the next question
       }, 1000); // Short delay so user sees the success message
     }
   };
@@ -35,19 +36,19 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
   };
 
   // If there's no solution, don't render the component
-  // if (!solution) return null;
+  if (!solution) return null;
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={[styles.container, { backgroundColor: theme.uiBackground }]}>
       <TextInput
         style={[
           styles.input, 
           { 
             color: theme.text,
             backgroundColor: theme === Colors.dark ? '#2A2A3A' : '#F0F0F0',
-            borderColor: feedback === true ? '#4CAF50' : 
-                        feedback === false ? Colors.warning : 
-                        theme === Colors.dark ? '#4A4A5A' : '#DDD'
+            borderColor: feedback === true ? Colors.primary : 
+                         feedback === false ? Colors.warning : 
+                         theme === Colors.dark ? '#4A4A5A' : '#DDD'
           }
         ]}
         placeholder="Enter your answer"
@@ -57,13 +58,13 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
         editable={!isChecked}
       />
       
-      <ThemedView style={styles.buttonContainer}>
+      <ThemedView style={[styles.buttonContainer, { backgroundColor: theme.uiBackground }]}>
         {!isChecked ? (
           <TouchableOpacity 
             style={[styles.button, { backgroundColor: Colors.primary }]} 
             onPress={checkAnswer}
           >
-            <ThemedText style={styles.buttonText}>Check Answer</ThemedText>
+            <ThemedText style={styles.buttonText}>Check</ThemedText>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity 
@@ -76,11 +77,11 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
       </ThemedView>
       
       {isChecked && (
-        <ThemedView style={styles.feedbackContainer}>
+        <ThemedView style={[styles.feedbackContainer, { backgroundColor: theme.uiBackground }]}>
           <ThemedText 
             style={[
               styles.feedback, 
-              { color: feedback ? '#4CAF50' : Colors.warning }
+              { color: feedback ? '#287c43ff' : Colors.warning }
             ]}
           >
             {feedback ? 'Correct! ✓' : 'Incorrect. Try again.'}
@@ -119,6 +120,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '41%',
+    height: 42
   },
   buttonText: {
     fontWeight: '500',
