@@ -17,6 +17,7 @@ const Question = () => {
   const [currentSubQuestionIndex, setCurrentSubQuestionIndex] = useState(0);
   const [currentSubSectionIndex, setCurrentSubSectionIndex] = useState(0);
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
   const router = useRouter();
 
   useEffect(() => {
@@ -109,7 +110,7 @@ const Question = () => {
   return (
     <ThemedView style={styles.container}>
       {/* Header with progress indicator */}
-      <ThemedView style={styles.header}>
+      <ThemedView style={[styles.header, { backgroundColor: theme.navbackground, borderBottomColor: theme === Colors.dark ? '#2A2A3A' : '#e0e0e0' }]}>
         <ThemedText style={styles.progressText}>{progressText}</ThemedText>
       </ThemedView>
 
@@ -121,7 +122,10 @@ const Question = () => {
         )}
 
         {/* Current item content */}
-        <ThemedView style={styles.currentItem}>
+        <ThemedView style={[styles.currentItem, { 
+          backgroundColor: theme.uiBackground,
+          shadowColor: theme === Colors.dark ? '#000' : '#222',
+        }]}>
           {showSubQuestionDirectly ? (
             <>
               <ThemedText style={styles.itemTitle}>
@@ -170,19 +174,15 @@ export default Question;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
   },
   header: {
     padding: 16,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    backgroundColor: 'white',
   },
   progressText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#666',
   },
   content: {
     flex: 1,
@@ -192,14 +192,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 24,
     lineHeight: 24,
-    color: '#333',
   },
   currentItem: {
     marginBottom: 32,
-    backgroundColor: 'white',
     borderRadius: 8,
     padding: 16,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -209,32 +206,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 12,
-    color: '#2c3e50',
   },
   itemContent: {
     fontSize: 16,
     lineHeight: 22,
-    color: '#34495e',
     marginBottom: 16,
   },
   navigation: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    backgroundColor: 'white',
   },
   navButton: {
     padding: 12,
-    backgroundColor: '#3498db',
+    backgroundColor: Colors.primary,
     borderRadius: 6,
     alignItems: 'center',
   },
   navButtonText: {
-    color: 'white',
     fontWeight: '600',
   },
   error: {
-    color: 'red',
+    color: Colors.warning,
     marginBottom: 16,
   }
 });
