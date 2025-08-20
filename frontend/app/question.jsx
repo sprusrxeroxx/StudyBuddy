@@ -110,7 +110,7 @@ const Question = () => {
   return (
     <ThemedView style={styles.container}>
       {/* Header with progress indicator */}
-      <ThemedView style={[styles.header, { backgroundColor: theme.navbackground, borderBottomColor: theme === Colors.dark ? '#2A2A3A' : '#e0e0e0' }]}>
+      <ThemedView style={[styles.header, { backgroundColor: theme.uiBackground, borderBottomColor: theme === Colors.dark ? '#2A2A3A' : '#e0e0e0' }]}>
         <ThemedText style={styles.progressText}>{progressText}</ThemedText>
       </ThemedView>
 
