@@ -5,6 +5,8 @@ import ThemedText from '../atoms/ThemedText';
 import ThemedView from '../atoms/ThemedView';
 import { Colors } from '../../constants/Colors';
 
+import LatexRenderer from '../atoms/LatexRenderer';
+
 const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState(null);
@@ -87,9 +89,10 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
             {feedback ? 'Correct! ✓' : 'Incorrect. Try again.'}
           </ThemedText>
           {!feedback && solution && (
-            <ThemedText style={styles.solutionText}>
-              Solution: {solution}
-            </ThemedText>
+            <LatexRenderer 
+              latex={solution} 
+              style={styles.solutionText}
+            />
           )}
         </ThemedView>
       )}

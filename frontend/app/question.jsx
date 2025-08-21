@@ -1,4 +1,4 @@
-import { StyleSheet, ActivityIndicator, TouchableOpacity, useColorScheme, ScrollView } from 'react-native'
+import { StyleSheet, ActivityIndicator, useColorScheme, ScrollView } from 'react-native'
 import { useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
@@ -6,6 +6,7 @@ import { Colors } from '../constants/Colors';
 
 import ThemedView from '../components/atoms/ThemedView';
 import ThemedText from '../components/atoms/ThemedText';
+import LatexRenderer from '../components/atoms/LatexRenderer';
 import SolutionChecker from '../components/molecules/SolutionChecker';
 
 const Question = () => {
@@ -129,11 +130,12 @@ const Question = () => {
           {showSubQuestionDirectly ? (
             <>
               <ThemedText style={styles.itemTitle}>
-                {question.sort_order}.{currentSubQuestion.sort_order}
+                {question.sort_order}.{currentSubQuestion.sort_order} {currentSubQuestion.stem}
               </ThemedText>
-              <ThemedText style={styles.itemContent}>
-                {currentSubQuestion.stem}
-              </ThemedText>
+                <LatexRenderer 
+                  latex={currentSubQuestion.stem} 
+                  style={styles.itemContent}
+                />
               
               {/* Solution checker for subquestion */}
               {currentSubQuestion.solutions && (
@@ -149,9 +151,10 @@ const Question = () => {
               <ThemedText style={styles.itemTitle}>
                 {question.sort_order}.{currentSubQuestion.sort_order}.{currentSubSection.sort_order}
               </ThemedText>
-              <ThemedText style={styles.itemContent}>
-                {currentSubSection.stem}
-              </ThemedText>
+              <LatexRenderer 
+                latex={currentSubSection.stem} 
+                style={[styles.itemContent]}
+              />
               
               {/* Solution checker for subsection */}
               {currentSubSection.solutions && (
@@ -211,6 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     marginBottom: 16,
+    marginLeft: '30%'
   },
   navigation: {
     padding: 16,
