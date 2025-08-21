@@ -138,7 +138,6 @@ def get_questions_by_exam(exam_id):
                 'id': q.id,
                 'stem': q.stem,
                 'sort_order': q.sort_order,
-                'solutions': q.solutions,
                 'sub_questions_count': len(q.sub_questions)
             }
             questions.append(question_data)
