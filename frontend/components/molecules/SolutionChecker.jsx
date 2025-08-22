@@ -91,7 +91,8 @@ const SolutionChecker = ({ solution, onCorrectAnswer, colorScheme }) => {
           {!feedback && solution && (
             <LatexRenderer 
               latex={solution} 
-              style={styles.solutionText}
+              style={styles.itemContent}
+              color={theme.text}
             />
           )}
         </ThemedView>
