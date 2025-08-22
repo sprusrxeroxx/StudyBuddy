@@ -16,7 +16,7 @@ const Home = () => {
       <Spacer />
       <ThemedText style={styles.shadowedText}><Link href="/exams">Exams</Link></ThemedText>
       <ThemedText style={[styles.shadowedText, { marginTop: 1 }]}>
-        <Link href="/practice">Practice</Link>
+        <Link href="/admin">Admin</Link>
       </ThemedText>
     </ThemedView>
   )
