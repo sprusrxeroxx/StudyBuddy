@@ -1,9 +1,14 @@
+// frontend/components/atoms/LatexRenderer.jsx
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MathJax from 'react-native-mathjax';
 
-
-const LatexRenderer = ({ latex, style }) => {
-
+/**
+ * latex: string of LaTeX (may include $...$ or $$...$$)
+ * style: RN style applied to outer container.
+ * color: CSS color string.
+ */
+const LatexRenderer = ({ latex = '', style, color = '#000' }) => {
   const mjOptions = {
     messageStyle: 'none',
     extensions: ['tex2jax.js'],
@@ -18,11 +23,24 @@ const LatexRenderer = ({ latex, style }) => {
     }
   };
 
+  // Wraps content in a div that sets color and add CSS to make MathJax SVG/HTML elements inherit it
+  const html = `
+    <div style="color: ${color};">
+      <style>
+        /* MathJax v3 svg containers */
+        .mjx-svg * { fill: currentColor !important; stroke: none !important; }
+        /* MathJax v2/html-css output */
+        .MathJax, .MathJax * { color: ${color} !important; }
+      </style>
+      ${latex}
+    </div>
+  `;
+
   return (
     <View style={[styles.container, style]}>
       <MathJax
         style={styles.mathJax}
-        html={latex}
+        html={html}
         options={mjOptions}
       />
     </View>
@@ -31,7 +49,7 @@ const LatexRenderer = ({ latex, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 4,
+    marginVertical: 10,
   },
   mathJax: {
     backgroundColor: 'transparent'
