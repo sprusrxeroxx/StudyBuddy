@@ -20,7 +20,7 @@ const RootLayout = () => {
                 }}>
                     <Stack.Screen name="index" options={{ headerShown: false }} />
                     <Stack.Screen name="exams" options={{ title: '' }} />
-                    <Stack.Screen name="practice" options={{ title: '' }} />
+                    <Stack.Screen name="admin" options={{ title: '' }} />
                     <Stack.Screen name="question" options={{ title: '' }} />
                 </Stack>
             <ThemedView style={[styles.footerContainer, { backgroundColor: theme.uibackground }]}>
