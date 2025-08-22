@@ -118,10 +118,9 @@ const Question = () => {
       {/* Content area with question text */}
       <ScrollView style={styles.content}>
         {/* Main question stem */}
-        {question.stem && (
+        {(question.stem) && (
           <ThemedText style={styles.questionStem}>{question.stem}</ThemedText>
         )}
-
         {/* Current item content */}
         <ThemedView style={[styles.currentItem, { 
           backgroundColor: theme.uiBackground,
@@ -130,11 +129,12 @@ const Question = () => {
           {showSubQuestionDirectly ? (
             <>
               <ThemedText style={styles.itemTitle}>
-                {question.sort_order}.{currentSubQuestion.sort_order} {currentSubQuestion.stem}
+                {question.sort_order}.{currentSubQuestion.sort_order}
               </ThemedText>
                 <LatexRenderer 
                   latex={currentSubQuestion.stem} 
                   style={styles.itemContent}
+                  color={theme.text}
                 />
               
               {/* Solution checker for subquestion */}
@@ -149,11 +149,13 @@ const Question = () => {
           ) : (
             <>
               <ThemedText style={styles.itemTitle}>
-                {question.sort_order}.{currentSubQuestion.sort_order}.{currentSubSection.sort_order}
+                {question.sort_order}.{currentSubQuestion.sort_order}.{currentSubSection.sort_order} { currentSubQuestion.solutions ? null : currentSubQuestion.stem}
+
               </ThemedText>
               <LatexRenderer 
                 latex={currentSubSection.stem} 
-                style={[styles.itemContent]}
+                style={styles.itemContent}
+                color={theme.text}
               />
               
               {/* Solution checker for subsection */}
@@ -212,9 +214,9 @@ const styles = StyleSheet.create({
   },
   itemContent: {
     fontSize: 16,
-    lineHeight: 22,
-    marginBottom: 16,
-    marginLeft: '30%'
+    // lineHeight: 10,
+    marginBottom: 10,
+    marginLeft: '20%'
   },
   navigation: {
     padding: 16,
